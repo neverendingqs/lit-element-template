@@ -1,101 +1,45 @@
-# <%= name %>
+# lit-element-template
 
-[![NPM version](https://img.shields.io/npm/v/@brightspace-ui/<%= shortName %>.svg)](https://www.npmjs.org/package/@brightspace-ui/<%= shortName %>)
-[![Greenkeeper badge](https://badges.greenkeeper.io/BrightspaceUI/<%= shortName %>.svg)](https://greenkeeper.io/)
-[![Build status][ci-image]][ci-url]
+Template for creating BrightspaceUI lit elements.
 
-<%= description %>
+With this template you get:
 
-## Installation
+* Project boilerplate including: README, .editorconfig, .gitignore, package.json, polymer.json, CODEOWNERS and LICENSE (Apache-2.0)
+* A basic LitElement scaffold
+* Demo page for the element
+* Test page for the element
+* Travis CI ready-to-go
+* Local tests that do linting using ESLint and unit tests
+* Cross-browser testing from Travis CI using Sauce Labs
 
-To install from NPM:
+## Setup
 
-```shell
-npm install <%= packageName %>
+This assumes you have node installed.
+
+1. Follow the Github instructions [here](https://help.github.com/en/articles/creating-a-repository-from-a-template) to create a new repository from this template, then clone the new repository on your local machine.
+2. Within your local copy of your new repository, modify `config` at top of `configure-repo.js`. For example:
+```
+const config = {
+	'name': 'd2l-myelement', // d2l-${config.shortName}
+	'shortName': 'myelement',
+	'packageName': '@brightspace-ui/myelement', // @brightspace-ui/${config.shortName}
+	'description': 'my test element',
+	'codeowner': 'me'
+};
+```
+3. Run the script:
+```
+node configure-repo.js
 ```
 
-## Usage
+After the script successfully runs, follow the instructions on the generated README for usage of your new component.
 
-```html
-<script type="module">
-    import '<%= packageName %>/<%= shortName %>.js';
-</script>
-<<%= name %>>My element</<%= name %>>
-```
+### Sauce Labs
 
-## Developing, Testing and Contributing
+To do cross-browser testing using Sauce Labs, the API key needs to be encrypted into the .travis.yml file.
 
-After cloning the repo, run `npm install` to install dependencies.
+To learn more about how to set this up, see the [testing](https://github.com/BrightspaceUI/guide/wiki/Testing) section of The Guide.
 
-If you don't have it already, install the [Polymer CLI](https://www.polymer-project.org/3.0/docs/tools/polymer-cli) globally:
+## Developing and Contributing
 
-```shell
-npm install -g polymer-cli
-```
-
-### Running the demos
-
-To start a [local web server](https://www.polymer-project.org/3.0/docs/tools/polymer-cli-commands#serve) that hosts the demo page and tests:
-
-```shell
-polymer serve
-```
-
-### Testing
-
-To lint ([eslint](http://eslint.org/) and [Polymer lint](https://www.polymer-project.org/3.0/docs/tools/polymer-cli-commands#lint)):
-
-```shell
-npm run lint
-```
-
-To run unit tests locally using [Polymer test](https://www.polymer-project.org/3.0/docs/tools/polymer-cli-commands#tests):
-
-```shell
-npm run test:polymer:local
-```
-
-To lint AND run local unit tests:
-
-```shell
-npm test
-```
-
-[ci-url]: https://travis-ci.org/BrightspaceUI/<%= shortName %>
-[ci-image]: https://travis-ci.org/BrightspaceUI/<%= shortName %>.svg?branch=master
-
-### Running the demos
-
-To start a [local web server](https://www.polymer-project.org/3.0/docs/tools/polymer-cli-commands#serve) that hosts the demo page and tests:
-
-```shell
-polymer serve
-```
-
-### Testing
-
-To lint:
-
-```shell
-npm run lint
-```
-
-To run local unit tests:
-
-```shell
-npm run test:local
-```
-
-To run a subset of local unit tests, modify your local [index.html](https://github.com/BrightspaceUI/<%= shortName %>/blob/master/test/index.html), or start the dev server and navigate to the desired test page.
-
-To run linting and unit tests:
-
-```shell
-npm test
-```
-
-## Versioning, Releasing & Deploying
-
-All version changes should obey [semantic versioning](https://semver.org/) rules.
-
-Include either `[increment major]`, `[increment minor]` or `[increment patch]` in your merge commit message to automatically increment the `package.json` version, create a tag, and trigger a deployment to NPM.
+Pull requests welcome!
