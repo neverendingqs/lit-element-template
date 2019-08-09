@@ -26,12 +26,12 @@ function updateFiles(path) {
 
 function replaceTextWithConfigs(fileName) {
 	return new Promise((resolve) => {
+		if (fileName.indexOf('configure-repo.js') !== -1
+			|| fileName.indexOf('.git') !== -1
+			|| fileName.indexOf('node_modules') !== -1) {
+			return;
+		}
 		fs.readFile(fileName, 'utf8', (err, data) => {
-			if (fileName.indexOf('configure-repo.js') !== -1
-				|| fileName.indexOf('.git') !== -1
-				|| fileName.indexOf('node_modules') !== -1) {
-				return;
-			}
 			if (err) {
 				return console.log(err);
 			}
