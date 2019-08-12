@@ -23,8 +23,25 @@ console.log(`Filling in config values for ${name}...`);
 updateFiles('./');
 const year = new Date().getFullYear().toString();
 replaceText('LICENSE', '<%= year %>', year);
-const publishInfo = config.publish ? `"publishConfig": { "access": "public" },\n  "files": [ "${config.shortName}.js" ]` : '"private": true';
+
+let deployInfo, publishInfo;
+if (config.publish) {
+	deployInfo = `deploy:
+  - provider: npm
+    email: d2ltravisdeploy@d2l.com
+    skip_cleanup: true
+    api_key:
+      # d2l-travis-deploy: ...
+    on:
+      tags: true
+      repo: ${githubOrg}/${config.shortName}`;
+	publishInfo = `"publishConfig": { "access": "public" },\n  "files": [ "${config.shortName}.js" ]`;
+} else {
+	deployInfo = '';
+	publishInfo = '"private": true';
+}
 replaceText('package.json', '<%= publishInfo %>', publishInfo);
+replaceText('travis.yml', '<%= deployInfo %>', deployInfo);
 
 console.log('Moving files...');
 moveFile('_element.js', `${config.shortName}.js`);

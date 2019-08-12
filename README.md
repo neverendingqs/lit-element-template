@@ -18,7 +18,7 @@ With this template you get:
 This assumes you have node installed.
 
 1. Follow the Github instructions [here](https://help.github.com/en/articles/creating-a-repository-from-a-template) to create a new repository from this template, then clone the new repository on your local machine.
-2. Within your local copy of your new repository, modify `config` at top of `configure-repo.js`. For example:
+2. Within your local copy of your new repository, modify `config` at top of configure-repo.js. For example:
 ```
 const config = {
 	'codeowner': 'me',
@@ -43,7 +43,9 @@ To learn more about how to set this up, see the [testing](https://github.com/Bri
 
 ### Publishing
 
-If you use `'publish': true` in your `config` object in configure-repo.js, your `package.json` file will be setup for future public publishing with `npm`. Once you are ready to publish your element, navigate to the root directory of your package and use the command `npm publish --access public` (see [here](https://docs.npmjs.com/creating-and-publishing-scoped-public-packages#publishing-scoped-public-packages) for more information).
+If you use `'publish': true` in your `config` object in configure-repo.js, your package.json and .travis.yml files will be setup for future public publishing with `npm`. To complete getting the publishing to work:
+* A `d2l-travis-deploy` API key needs to be encrypted and added into the .travis.yml file under `# d2l-travis-deploy: ...` (replace the `...` with the token used for generating the key).
+* Once you are ready to publish your element, navigate to the root directory of your package and use the command `npm publish --access public` (see [here](https://docs.npmjs.com/creating-and-publishing-scoped-public-packages#publishing-scoped-public-packages) for more information).
 
 ## Developing and Contributing
 
