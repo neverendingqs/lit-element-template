@@ -1,11 +1,11 @@
 {
-  "plugins": {
-    "local": {
-      "browsers": ["chrome"],
-      "browserOptions": {
-        "chrome": ["disable-gpu", "no-sandbox"]
-      }
-    },
+	"plugins": {
+		"local": {
+			"browsers": ["chrome"],
+			"browserOptions": {
+				"chrome": ["disable-gpu", "no-sandbox"]
+			}
+		},
 		"sauce": {
 			"browsers": [
 				{
@@ -16,6 +16,16 @@
 				{
 					"browserName": "safari",
 					"platform": "OS X 10.13",
+					"version": ""
+				},
+				{
+					"browserName": "firefox",
+					"platform": "OS X 10.13",
+					"version": ""
+				},
+				{
+					"browserName": "microsoftedge",
+					"platform": "Windows 10",
 					"version": ""
 				}
 			]
