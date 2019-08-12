@@ -23,7 +23,8 @@ console.log(`Filling in config values for ${name}...`);
 updateFiles('./');
 const year = new Date().getFullYear().toString();
 replaceText('LICENSE', '<%= year %>', year);
-updatePublishInfo();
+const publishInfo = config.publish ? `"publishConfig": { "access": "public" },\n  "files": [ "${config.shortName}.js" ]` : '"private": true';
+replaceText('package.json', '<%= publishInfo %>', publishInfo);
 
 console.log('Moving files...');
 moveFile('_element.js', `${config.shortName}.js`);
@@ -65,18 +66,6 @@ function replaceTextWithConfigs(fileName) {
 		.replace(/<%= codeowner %>/g, config.codeowner)
 		.replace(/<%= githubOrg %>/g, githubOrg);
 	fs.writeFileSync(fileName, result, 'utf8');
-}
-
-function updatePublishInfo() {
-	let publishInfo;
-
-	if (config.publish) {
-		publishInfo = `"publishConfig": { "access": "public" },\n  "files": [ ${config.shortName}.js] `;
-	} else {
-		publishInfo = '"private": true'
-	}
-
-	replaceText('package.json', '<%= publishInfo %>', publishInfo);
 }
 
 function replaceText(fileName, original, replacement) {
