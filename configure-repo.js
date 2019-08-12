@@ -3,10 +3,20 @@ const fs = require('fs'); // eslint-disable-line
 const config = {
 	'name': '',
 	'shortName': '',
-	'packageName': '',
 	'description': '',
 	'codeowner': ''
 };
+
+if (config.type !== 'labs' && config.type !== 'official') {
+	console.log('Input error: Please choose either "labs" or "official" as "type"');
+	return;
+}
+
+const orgName = config.type === 'official' ? '@brightspace-ui' : '@brightspace-ui-labs';
+const githubOrg = config.type === 'official' ? 'BrightspaceUI' : 'BrightspaceUILabs';
+const packageName = `${orgName}/${config.shortName}`;
+const type = config.type === 'labs' ? 'labs-' : '';
+const name = `d2l-${type}${config.shortName}`;
 
 function updateFiles(path) {
 	if (fs.existsSync(path)) {
@@ -29,11 +39,6 @@ function replaceTextWithConfigs(fileName) {
 		return;
 	}
 	const data = fs.readFileSync(fileName, 'utf8');
-	const orgName = config.type === 'official' ? '@brightspace-ui' : '@brightspace-ui-labs';
-	const githubOrg = config.type === 'official' ? 'BrightspaceUI' : 'BrightspaceUILabs';
-	const packageName = `${orgName}/${config.shortName}`;
-	const type = config.type === 'labs' ? 'labs-' : '';
-	const name = `d2l-${type}${config.shortName}`;
 
 	const result = data.replace(/<%= name %>/g, name)
 		.replace(/<%= shortName %>/g, config.shortName)
@@ -54,14 +59,9 @@ function moveFile(source, destination) {
 	});
 }
 
-if (config.type !== 'labs' && config.type !== 'official') {
-	console.log('Input error: Please choose either "labs" or "official" as "type"');
-	return;
-}
-
 const path = './';
 
-console.log(`Filling in config values for ${config.shortName}...`);
+console.log(`Filling in config values for ${name}...`);
 updateFiles(path);
 const year = new Date().getFullYear().toString();
 const licenseData = fs.readFileSync('LICENSE', 'utf8');
@@ -77,4 +77,4 @@ moveFile('.CODEOWNERS', 'CODEOWNERS');
 fs.unlinkSync('README.md');
 moveFile('README_element.md', 'README.md');
 
-console.log(`Repo for ${config.shortName} successfully configured.`);
+console.log(`Repo for ${name} successfully configured.`);
