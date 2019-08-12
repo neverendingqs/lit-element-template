@@ -1,4 +1,5 @@
 const fs = require('fs'); // eslint-disable-line
+const Helper = require('./configure-helper.js'); // eslint-disable-line
 
 const config = {
 	'codeowner': '',
@@ -13,90 +14,21 @@ if (config.type !== 'labs' && config.type !== 'official') {
 	return;
 }
 
-const githubOrg = config.type === 'official' ? 'BrightspaceUI' : 'BrightspaceUILabs';
-const orgName = config.type === 'official' ? '@brightspace-ui' : '@brightspace-ui-labs';
-const packageName = `${orgName}/${config.shortName}`; // @brightspace-ui/element or @brightspace-ui-labs/element
-const type = config.type === 'labs' ? 'labs-' : '';
-const name = `d2l-${type}${config.shortName}`; // d2l-labs-element or d2l-element
+const helper = new Helper(config);
 
-console.log(`Filling in config values for ${name}...`);
-updateFiles('./');
+console.log(`Filling in config values for ${helper.name}...`);
+helper.updateFiles('./');
 const year = new Date().getFullYear().toString();
-replaceText('LICENSE', '<%= year %>', year);
-
-let deployInfo, publishInfo;
-if (config.publish) {
-	deployInfo = `deploy:
-  - provider: npm
-    email: d2ltravisdeploy@d2l.com
-    skip_cleanup: true
-    api_key:
-      # d2l-travis-deploy: ...
-    on:
-      tags: true
-      repo: ${githubOrg}/${config.shortName}`;
-	publishInfo = `"publishConfig": { "access": "public" },\n  "files": [ "${config.shortName}.js" ]`;
-} else {
-	deployInfo = '';
-	publishInfo = '"private": true';
-}
-replaceText('package.json', '<%= publishInfo %>', publishInfo);
-replaceText('travis.yml', '<%= deployInfo %>', deployInfo);
+helper.replaceText('LICENSE', '<%= year %>', year);
+helper.updatePublishInfo();
 
 console.log('Moving files...');
-moveFile('_element.js', `${config.shortName}.js`);
-moveFile('test/_element.html', `test/${config.shortName}.html`);
-moveFile('travis.yml', '.travis.yml');
-moveFile('.CODEOWNERS', 'CODEOWNERS');
+helper.moveFile('_element.js', `${config.shortName}.js`);
+helper.moveFile('test/_element.html', `test/${config.shortName}.html`);
+helper.moveFile('travis.yml', '.travis.yml');
+helper.moveFile('.CODEOWNERS', 'CODEOWNERS');
 
 fs.unlinkSync('README.md');
-moveFile('README_element.md', 'README.md');
+helper.moveFile('README_element.md', 'README.md');
 
-console.log(`Repo for ${name} successfully configured.`);
-
-function updateFiles(path) {
-	if (fs.existsSync(path)) {
-		const files = fs.readdirSync(path);
-		files.forEach((file) => {
-			const currentPath = `${path}/${file}`;
-			if (fs.lstatSync(currentPath).isDirectory()) {
-				updateFiles(currentPath);
-			} else {
-				replaceTextWithConfigs(currentPath);
-			}
-		});
-	}
-}
-
-function replaceTextWithConfigs(fileName) {
-	if (fileName.indexOf('configure-repo.js') !== -1
-		|| fileName.indexOf('.git') !== -1
-		|| fileName.indexOf('node_modules') !== -1) {
-		return;
-	}
-	const data = fs.readFileSync(fileName, 'utf8');
-
-	const result = data.replace(/<%= name %>/g, name)
-		.replace(/<%= shortName %>/g, config.shortName)
-		.replace(/<%= packageName %>/g, packageName)
-		.replace(/<%= description %>/g, config.description)
-		.replace(/<%= codeowner %>/g, config.codeowner)
-		.replace(/<%= githubOrg %>/g, githubOrg);
-	fs.writeFileSync(fileName, result, 'utf8');
-}
-
-function replaceText(fileName, original, replacement) {
-	const data = fs.readFileSync(fileName, 'utf8');
-	const result = data.replace(new RegExp(original, 'g'), replacement);
-	fs.writeFileSync(fileName, result, 'utf8');
-}
-
-function moveFile(source, destination) {
-	const sourceStream = fs.createReadStream(source);
-	const destinationStream = fs.createWriteStream(destination);
-
-	sourceStream.pipe(destinationStream, { end: false });
-	sourceStream.on('end', () => {
-		fs.unlinkSync(source);
-	});
-}
+console.log(`Repo for ${helper.name} successfully configured.`);

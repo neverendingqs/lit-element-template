@@ -33,7 +33,7 @@ const config = {
 node configure-repo.js
 ```
 
-After the script successfully runs, follow the instructions on the generated README for usage of your new component.
+After the script successfully runs, follow the instructions on the generated README for usage of your new component. The files configure-repo.js and configure-helper.js can be removed from your component repo.
 
 ### Sauce Labs
 
