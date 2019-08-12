@@ -11,6 +11,7 @@ With this template you get:
 * Travis CI ready-to-go
 * Local tests that do linting using ESLint and unit tests
 * Cross-browser testing from Travis CI using Sauce Labs
+* npm publish setup
 
 ## Setup
 
@@ -39,6 +40,10 @@ After the script successfully runs, follow the instructions on the generated REA
 To do cross-browser testing using Sauce Labs, the API key needs to be encrypted into the .travis.yml file.
 
 To learn more about how to set this up, see the [testing](https://github.com/BrightspaceUI/guide/wiki/Testing) section of The Guide.
+
+### Publishing
+
+If you use `'publish': true` in your `config` object in configure-repo.js, your `package.json` file will be setup for future public publishing with `npm`. Once you are ready to publish your element, navigate to the root directory of your package and use the command `npm publish --access public` (see [here](https://docs.npmjs.com/creating-and-publishing-scoped-public-packages#publishing-scoped-public-packages) for more information).
 
 ## Developing and Contributing
 
