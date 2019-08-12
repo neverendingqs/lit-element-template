@@ -20,11 +20,10 @@ This assumes you have node installed.
 2. Within your local copy of your new repository, modify `config` at top of `configure-repo.js`. For example:
 ```
 const config = {
-	'name': 'd2l-myelement', // d2l-${config.shortName}
 	'shortName': 'myelement',
-	'packageName': '@brightspace-ui/myelement', // @brightspace-ui/${config.shortName}
 	'description': 'my test element',
-	'codeowner': 'me'
+	'codeowner': 'me',
+	'type': 'labs' // labs | official
 };
 ```
 3. Run the script:

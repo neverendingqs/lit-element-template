@@ -1,7 +1,7 @@
 {
   "name": "<%= packageName %>",
   "description": "<%= description %>",
-  "repository": "https://github.com/BrightspaceUI/<%= shortName %>.git",
+  "repository": "https://github.com/<%= githubOrg %>/<%= shortName %>.git",
   "private": true,
   "scripts": {
     "lint": "eslint . --ext .js,.html",

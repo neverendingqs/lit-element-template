@@ -29,11 +29,18 @@ function replaceTextWithConfigs(fileName) {
 		return;
 	}
 	const data = fs.readFileSync(fileName, 'utf8');
-	const result = data.replace(/<%= name %>/g, config.name)
+	const orgName = config.type === 'official' ? '@brightspace-ui' : '@brightspace-ui-labs';
+	const githubOrg = config.type === 'official' ? 'BrightspaceUI' : 'BrightspaceUILabs';
+	const packageName = `${orgName}/${config.shortName}`;
+	const type = config.type === 'labs' ? 'labs-' : '';
+	const name = `d2l-${type}${config.shortName}`;
+
+	const result = data.replace(/<%= name %>/g, name)
 		.replace(/<%= shortName %>/g, config.shortName)
-		.replace(/<%= packageName %>/g, config.packageName)
+		.replace(/<%= packageName %>/g, packageName)
 		.replace(/<%= description %>/g, config.description)
-		.replace(/<%= codeowner %>/g, config.codeowner);
+		.replace(/<%= codeowner %>/g, config.codeowner)
+		.replace(/<%= githubOrg %>/g, githubOrg);
 	fs.writeFileSync(fileName, result, 'utf8');
 }
 
@@ -47,9 +54,14 @@ function moveFile(source, destination) {
 	});
 }
 
+if (config.type !== 'labs' && config.type !== 'official') {
+	console.log('Input error: Please choose either "labs" or "official" as "type"');
+	return;
+}
+
 const path = './';
 
-console.log(`Filling in config values for ${config.name}...`);
+console.log(`Filling in config values for ${config.shortName}...`);
 updateFiles(path);
 const year = new Date().getFullYear().toString();
 const licenseData = fs.readFileSync('LICENSE', 'utf8');
@@ -65,4 +77,4 @@ moveFile('.CODEOWNERS', 'CODEOWNERS');
 fs.unlinkSync('README.md');
 moveFile('README_element.md', 'README.md');
 
-console.log(`Repo for ${config.name} successfully configured.`);
+console.log(`Repo for ${config.shortName} successfully configured.`);
