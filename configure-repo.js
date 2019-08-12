@@ -71,7 +71,7 @@ function updatePublishInfo() {
 	let publishInfo;
 
 	if (config.publish) {
-		publishInfo = '"publishConfig": { "access": "public" },\n\t\t"files": [\n\t\t\t<%= shortName %>.js]';
+		publishInfo = `"publishConfig": { "access": "public" },\n  "files": [ ${config.shortName}.js] `;
 	} else {
 		publishInfo = '"private": true'
 	}
