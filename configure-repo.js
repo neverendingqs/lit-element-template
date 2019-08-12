@@ -1,10 +1,11 @@
 const fs = require('fs'); // eslint-disable-line
 
 const config = {
-	'name': '',
-	'shortName': '',
+	'codeowner': '',
 	'description': '',
-	'codeowner': ''
+	'publish': '',
+	'shortName': '',
+	'type': ''
 };
 
 if (config.type !== 'labs' && config.type !== 'official') {
@@ -12,11 +13,28 @@ if (config.type !== 'labs' && config.type !== 'official') {
 	return;
 }
 
-const orgName = config.type === 'official' ? '@brightspace-ui' : '@brightspace-ui-labs';
 const githubOrg = config.type === 'official' ? 'BrightspaceUI' : 'BrightspaceUILabs';
-const packageName = `${orgName}/${config.shortName}`;
+const orgName = config.type === 'official' ? '@brightspace-ui' : '@brightspace-ui-labs';
+const packageName = `${orgName}/${config.shortName}`; // @brightspace-ui/element or @brightspace-ui-labs/element
 const type = config.type === 'labs' ? 'labs-' : '';
-const name = `d2l-${type}${config.shortName}`;
+const name = `d2l-${type}${config.shortName}`; // d2l-labs-element or d2l-element
+
+console.log(`Filling in config values for ${name}...`);
+updateFiles('./');
+const year = new Date().getFullYear().toString();
+replaceText('LICENSE', '<%= year %>', year);
+updatePublishInfo();
+
+console.log('Moving files...');
+moveFile('_element.js', `${config.shortName}.js`);
+moveFile('test/_element.html', `test/${config.shortName}.html`);
+moveFile('travis.yml', '.travis.yml');
+moveFile('.CODEOWNERS', 'CODEOWNERS');
+
+fs.unlinkSync('README.md');
+moveFile('README_element.md', 'README.md');
+
+console.log(`Repo for ${name} successfully configured.`);
 
 function updateFiles(path) {
 	if (fs.existsSync(path)) {
@@ -49,6 +67,24 @@ function replaceTextWithConfigs(fileName) {
 	fs.writeFileSync(fileName, result, 'utf8');
 }
 
+function updatePublishInfo() {
+	let publishInfo;
+
+	if (config.publish) {
+		publishInfo = '"publishConfig": { "access": "public" },\n\t\t"files": [\n\t\t\t<%= shortName %>.js]';
+	} else {
+		publishInfo = '"private": true'
+	}
+
+	replaceText('package.json', '<%= publishInfo %>', publishInfo);
+}
+
+function replaceText(fileName, original, replacement) {
+	const data = fs.readFileSync(fileName, 'utf8');
+	const result = data.replace(new RegExp(original, 'g'), replacement);
+	fs.writeFileSync(fileName, result, 'utf8');
+}
+
 function moveFile(source, destination) {
 	const sourceStream = fs.createReadStream(source);
 	const destinationStream = fs.createWriteStream(destination);
@@ -58,23 +94,3 @@ function moveFile(source, destination) {
 		fs.unlinkSync(source);
 	});
 }
-
-const path = './';
-
-console.log(`Filling in config values for ${name}...`);
-updateFiles(path);
-const year = new Date().getFullYear().toString();
-const licenseData = fs.readFileSync('LICENSE', 'utf8');
-const licenseResult = licenseData.replace(/<%= year %>/g, year);
-fs.writeFileSync('LICENSE', licenseResult, 'utf8');
-
-console.log('Moving files...');
-moveFile('_element.js', `${config.shortName}.js`);
-moveFile('test/_element.html', `test/${config.shortName}.html`);
-moveFile('travis.yml', '.travis.yml');
-moveFile('.CODEOWNERS', 'CODEOWNERS');
-
-fs.unlinkSync('README.md');
-moveFile('README_element.md', 'README.md');
-
-console.log(`Repo for ${name} successfully configured.`);

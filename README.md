@@ -20,9 +20,10 @@ This assumes you have node installed.
 2. Within your local copy of your new repository, modify `config` at top of `configure-repo.js`. For example:
 ```
 const config = {
-	'shortName': 'myelement',
-	'description': 'my test element',
 	'codeowner': 'me',
+	'description': 'my test element',
+	'publish': true,
+	'shortName': 'myelement',
 	'type': 'labs' // labs | official
 };
 ```
