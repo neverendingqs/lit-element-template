@@ -18,17 +18,7 @@ With this template you get:
 This assumes you have node installed.
 
 1. Follow the Github instructions [here](https://help.github.com/en/articles/creating-a-repository-from-a-template) to create a new repository from this template, then clone the new repository on your local machine.
-2. Within your local copy of your new repository, modify `config` at top of configure-repo.js. For example:
-```
-const config = {
-	'codeowner': 'me',
-	'description': 'my test element',
-	'publish': true,
-	'shortName': 'myelement',
-	'type': 'labs' // labs | official
-};
-```
-3. Run the script:
+3. Run the script, entering information as prompted (e.g., for repo name, description, etc.):
 ```
 node configure-repo.js
 ```
