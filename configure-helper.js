@@ -7,7 +7,7 @@ class Helper {
 	}
 
 	getRepoName() {
-		return `${this.githubOrg}/${this.shortName}`;
+		return `${this.githubOrg}/${this.shortName}`; // BrightspaceUI/element or BrightspaceUILabs/element
 	}
 
 	getShortName() {
@@ -61,7 +61,7 @@ class Helper {
       # d2l-travis-deploy: ...
     on:
       tags: true
-      repo: ${this.githubOrg}/${this.shortName}`;
+      repo: ${this.getRepoName()}`;
 			publishInfo = `"publishConfig": { "access": "public" },\n  "files": [ "${this.shortName}.js" ]`;
 		} else {
 			deployInfo = '';
