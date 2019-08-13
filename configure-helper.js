@@ -2,23 +2,20 @@ const fs = require('fs'); // eslint-disable-line
 
 class Helper {
 
-	constructor(config) {
-		this.config = config;
-		this.githubOrg = this.config.type === 'official' ? 'BrightspaceUI' : 'BrightspaceUILabs';
-		this.orgName = this.config.type === 'official' ? '@brightspace-ui' : '@brightspace-ui-labs';
-		this.packageName = `${this.orgName}/${this.config.shortName}`; // @brightspace-ui/element or @brightspace-ui-labs/element
-		this.type = this.config.type === 'labs' ? 'labs-' : '';
-		this.name = `d2l-${this.type}${this.config.shortName}`; // d2l-labs-element or d2l-element
+	deleteFile(fileName) {
+		fs.unlinkSync(fileName);
+	}
+
+	getRepoName() {
+		return `${this.githubOrg}/${this.shortName}`;
+	}
+
+	getShortName() {
+		return this.shortName;
 	}
 
 	moveFile(source, destination) {
-		const sourceStream = fs.createReadStream(source);
-		const destinationStream = fs.createWriteStream(destination);
-
-		sourceStream.pipe(destinationStream, { end: false });
-		sourceStream.on('end', () => {
-			fs.unlinkSync(source);
-		});
+		fs.renameSync(source, destination);
 	}
 
 	replaceText(fileName, original, replacement) {
@@ -27,22 +24,16 @@ class Helper {
 		fs.writeFileSync(fileName, result, 'utf8');
 	}
 
-	replaceTextWithConfigs(fileName) {
-		if (fileName.indexOf('configure-repo.js') !== -1
-			|| fileName.indexOf('configure-helper.js') !== -1
-			|| fileName.indexOf('.git') !== -1
-			|| fileName.indexOf('node_modules') !== -1) {
-			return;
-		}
-		const data = fs.readFileSync(fileName, 'utf8');
+	setDerivedProperties() {
+		this.githubOrg = this.type === 'official' ? 'BrightspaceUI' : 'BrightspaceUILabs';
+		this.orgName = this.type === 'official' ? '@brightspace-ui' : '@brightspace-ui-labs';
+		this.packageName = `${this.orgName}/${this.shortName}`; // @brightspace-ui/element or @brightspace-ui-labs/element
+		this.type = this.type === 'labs' ? 'labs-' : '';
+		this.name = `d2l-${this.type}${this.shortName}`; // d2l-labs-element or d2l-element
+	}
 
-		const result = data.replace(/<%= name %>/g, this.name)
-			.replace(/<%= shortName %>/g, this.config.shortName)
-			.replace(/<%= packageName %>/g, this.packageName)
-			.replace(/<%= description %>/g, this.config.description)
-			.replace(/<%= codeowner %>/g, this.config.codeowner)
-			.replace(/<%= githubOrg %>/g, this.githubOrg);
-		fs.writeFileSync(fileName, result, 'utf8');
+	setProperty(name, value) {
+		this[name] = value;
 	}
 
 	updateFiles(path) {
@@ -53,7 +44,7 @@ class Helper {
 				if (fs.lstatSync(currentPath).isDirectory()) {
 					this.updateFiles(currentPath);
 				} else {
-					this.replaceTextWithConfigs(currentPath);
+					this._replaceTextWithConfigs(currentPath);
 				}
 			});
 		}
@@ -61,7 +52,7 @@ class Helper {
 
 	updatePublishInfo() {
 		let deployInfo, publishInfo;
-		if (this.config.publish) {
+		if (this.publish) {
 			deployInfo = `deploy:
   - provider: npm
     email: d2ltravisdeploy@d2l.com
@@ -70,14 +61,32 @@ class Helper {
       # d2l-travis-deploy: ...
     on:
       tags: true
-      repo: ${this.githubOrg}/${this.config.shortName}`;
-			publishInfo = `"publishConfig": { "access": "public" },\n  "files": [ "${this.config.shortName}.js" ]`;
+      repo: ${this.githubOrg}/${this.shortName}`;
+			publishInfo = `"publishConfig": { "access": "public" },\n  "files": [ "${this.shortName}.js" ]`;
 		} else {
 			deployInfo = '';
 			publishInfo = '"private": true';
 		}
 		this.replaceText('package.json', '<%= publishInfo %>', publishInfo);
 		this.replaceText('travis.yml', '<%= deployInfo %>', deployInfo);
+	}
+
+	_replaceTextWithConfigs(fileName) {
+		if (fileName.indexOf('configure-repo.js') !== -1
+			|| fileName.indexOf('configure-helper.js') !== -1
+			|| fileName.indexOf('.git') !== -1
+			|| fileName.indexOf('node_modules') !== -1) {
+			return;
+		}
+		const data = fs.readFileSync(fileName, 'utf8');
+
+		const result = data.replace(/<%= name %>/g, this.name)
+			.replace(/<%= shortName %>/g, this.shortName)
+			.replace(/<%= packageName %>/g, this.packageName)
+			.replace(/<%= description %>/g, this.description)
+			.replace(/<%= codeowner %>/g, this.codeowner)
+			.replace(/<%= githubOrg %>/g, this.githubOrg);
+		fs.writeFileSync(fileName, result, 'utf8');
 	}
 }
 
