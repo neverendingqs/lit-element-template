@@ -1,6 +1,10 @@
-const fs = require('fs'); // eslint-disable-line
+const fs = require('fs');
 
 class Helper {
+
+	checkIfDefined(property) {
+		return this[property] ? true : false;
+	}
 
 	deleteFile(fileName) {
 		fs.unlinkSync(fileName);
@@ -52,7 +56,7 @@ class Helper {
 
 	updatePublishInfo() {
 		let deployInfo, publishInfo;
-		if (this.publish === 'true') {
+		if (this.publish === 'yes') {
 			deployInfo = `deploy:
   - provider: npm
     email: d2ltravisdeploy@d2l.com
@@ -90,4 +94,4 @@ class Helper {
 	}
 }
 
-module.exports = Helper; // eslint-disable-line
+module.exports = Helper;

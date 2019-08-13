@@ -20,10 +20,10 @@ This assumes you have node installed.
 1. Follow the Github instructions [here](https://help.github.com/en/articles/creating-a-repository-from-a-template) to create a new repository from this template, then clone the new repository on your local machine.
 3. Run the script, entering information as prompted (e.g., for repo name, description, etc.):
 ```
-node configure-repo.js
+node setup/configure-repo.js
 ```
 
-After the script successfully runs, follow the instructions on the generated README for usage of your new component. The files configure-repo.js and configure-helper.js can be removed from your component repo.
+After the script successfully runs, follow the instructions on the generated README for usage of your new component. The setup directory can now be removed from your component repo.
 
 ### Sauce Labs
 
