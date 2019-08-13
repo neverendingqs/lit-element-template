@@ -18,22 +18,12 @@ With this template you get:
 This assumes you have node installed.
 
 1. Follow the Github instructions [here](https://help.github.com/en/articles/creating-a-repository-from-a-template) to create a new repository from this template, then clone the new repository on your local machine.
-2. Within your local copy of your new repository, modify `config` at top of configure-repo.js. For example:
+3. Run the script, entering information as prompted (e.g., for repo name, description, etc.):
 ```
-const config = {
-	'codeowner': 'me',
-	'description': 'my test element',
-	'publish': true,
-	'shortName': 'myelement',
-	'type': 'labs' // labs | official
-};
-```
-3. Run the script:
-```
-node configure-repo.js
+node setup/configure-repo.js
 ```
 
-After the script successfully runs, follow the instructions on the generated README for usage of your new component. The files configure-repo.js and configure-helper.js can be removed from your component repo.
+After the script successfully runs, follow the instructions on the generated README for usage of your new component. The setup directory can now be removed from your component repo.
 
 ### Sauce Labs
 

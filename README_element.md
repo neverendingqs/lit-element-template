@@ -1,7 +1,7 @@
 # <%= name %>
 
-[![NPM version](https://img.shields.io/npm/v/@brightspace-ui/<%= shortName %>.svg)](https://www.npmjs.org/package/@brightspace-ui/<%= shortName %>)
-[![Greenkeeper badge](https://badges.greenkeeper.io/BrightspaceUI/<%= shortName %>.svg)](https://greenkeeper.io/)
+[![NPM version](https://img.shields.io/npm/v/<%= packageName %>/<%= shortName %>.svg)](https://www.npmjs.org/package/<%= packageName %>/<%= shortName %>)
+[![Greenkeeper badge](https://badges.greenkeeper.io/<%= githubOrg %>/<%= shortName %>.svg)](https://greenkeeper.io/)
 [![Build status][ci-image]][ci-url]
 
 <%= description %>
@@ -61,8 +61,8 @@ To lint AND run local unit tests:
 npm test
 ```
 
-[ci-url]: https://travis-ci.org/BrightspaceUI/<%= shortName %>
-[ci-image]: https://travis-ci.org/BrightspaceUI/<%= shortName %>.svg?branch=master
+[ci-url]: https://travis-ci.org/<%= githubOrg %>/<%= shortName %>
+[ci-image]: https://travis-ci.org/<%= githubOrg %>/<%= shortName %>.svg?branch=master
 
 ### Running the demos
 
@@ -86,7 +86,7 @@ To run local unit tests:
 npm run test:local
 ```
 
-To run a subset of local unit tests, modify your local [index.html](https://github.com/BrightspaceUI/<%= shortName %>/blob/master/test/index.html), or start the dev server and navigate to the desired test page.
+To run a subset of local unit tests, modify your local [index.html](https://github.com/<%= githubOrg %>/<%= shortName %>/blob/master/test/index.html), or start the dev server and navigate to the desired test page.
 
 To run linting and unit tests:
 
