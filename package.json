@@ -1,8 +1,8 @@
 {
   "name": "<%= packageName %>",
   "description": "<%= description %>",
-  "repository": "https://github.com/BrightspaceUI/<%= shortName %>.git",
-  "private": true,
+  "repository": "https://github.com/<%= githubOrg %>/<%= shortName %>.git",
+  <%= publishInfo %>,
   "scripts": {
     "lint": "eslint . --ext .js,.html",
     "test": "npm run lint && npm run test:local",
