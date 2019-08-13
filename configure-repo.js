@@ -10,16 +10,21 @@ const prompts = [
 	{ prompt: 'Short Name (e.g., button, dropdown): ', property: 'shortName' },
 	{ prompt: 'Description: ', property: 'description' },
 	{ prompt: 'Codeowner (e.g., myaccountname): ', property: 'codeowner' },
-	{ prompt: 'Publish (true | false): ', property: 'publish' },
-	{ prompt: 'Type (labs | official): ', property: 'type' }
+	{ prompt: 'Publish (true | false): ', property: 'publish', expected: ['true', 'false'] },
+	{ prompt: 'Type (labs | official): ', property: 'type', expected: ['labs', 'official'] }
 ];
 
 let counter = 0;
 standardOutput.write(prompts[counter].prompt);
 
 standardInput.on('data', (data) => {
-	helper.setProperty(prompts[counter].property, data.trim());
-	counter++;
+	data = data.trim();
+	if (prompts[counter].expected && !prompts[counter].expected.includes(data)) {
+		console.log(`Incorrect input. Please enter one of [${prompts[counter].expected}]`);
+	} else {
+		helper.setProperty(prompts[counter].property, data);
+		counter++;
+	}
 
 	if (counter < prompts.length) {
 		standardOutput.write(prompts[counter].prompt);

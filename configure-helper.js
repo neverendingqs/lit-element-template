@@ -52,7 +52,7 @@ class Helper {
 
 	updatePublishInfo() {
 		let deployInfo, publishInfo;
-		if (this.publish) {
+		if (this.publish === 'true') {
 			deployInfo = `deploy:
   - provider: npm
     email: d2ltravisdeploy@d2l.com
