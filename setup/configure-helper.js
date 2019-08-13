@@ -30,7 +30,7 @@ class Helper {
 
 	setDerivedProperties() {
 		this.shortName = this.shortName.toLowerCase();
-		this.shortNameCaps = this.shortName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+		this.shortNameCaps = this.shortName.replace(/-([a-z])/g, (g) => { return g[1].toUpperCase(); });
 		this.shortNameCaps = this.shortNameCaps.charAt(0).toUpperCase() + this.shortNameCaps.slice(1);
 		this.githubOrg = this.type === 'official' ? 'BrightspaceUI' : 'BrightspaceUILabs';
 		this.orgName = this.type === 'official' ? '@brightspace-ui' : '@brightspace-ui-labs';
