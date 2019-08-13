@@ -71,7 +71,7 @@ class Helper {
 		} else {
 			deployInfo = '';
 			publishInfo = '"private": true';
-			readmeInfo = 'and create a tag.';
+			readmeInfo = ' and create a tag.';
 		}
 		this.replaceText('package.json', '<%= publishInfo %>', publishInfo);
 		this.replaceText('travis.yml', '<%= deployInfo %>', deployInfo);
