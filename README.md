@@ -37,6 +37,10 @@ If you use `'publish': true` in your `config` object in configure-repo.js, your 
 * A `d2l-travis-deploy` API key needs to be encrypted and added into the .travis.yml file under `# d2l-travis-deploy: ...` (replace the `...` with the token used for generating the key).
 * Once you are ready to publish your element, navigate to the root directory of your package and use the command `npm publish --access public` (see [here](https://docs.npmjs.com/creating-and-publishing-scoped-public-packages#publishing-scoped-public-packages) for more information).
 
+### Localization
+
+To have localization setup by the configure-repo.js script, type "yes" to the Localization prompt, then select if resources should be statically or dynamically imported. See [here](https://github.com/BrightspaceUI/core/blob/master/mixins/localize-mixin.md#language-resources) for more information.
+
 ## Developing and Contributing
 
 Pull requests welcome!
