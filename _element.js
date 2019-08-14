@@ -18,8 +18,7 @@ class <%= shortName %> extends <%= extends %> {
 			}
 		`;
 	}
-	<%= localizeResources %>
-
+<%= localizeResources %>
 	constructor() {
 		super();
 

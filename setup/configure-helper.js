@@ -55,10 +55,10 @@ class Helper {
 	}
 
 	updateLocalizationInfo() {
-		let extends, localizeMixin, localizeResources;
+		let localizeExtends, localizeMixin, localizeResources;
 		if (this.localization === 'yes') {
-			extends = 'LocalizeMixin(LitElement)';
-			localizeMixin = `\nimport { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';`;
+			localizeExtends = 'LocalizeMixin(LitElement)';
+			localizeMixin = '\nimport { LocalizeMixin } from \'@brightspace-ui/core/mixins/localize-mixin.js\';';
 
 			if (this.localizeResources === 'static') {
 				localizeResources = `\n\tstatic async getLocalizeResources(langs) {
@@ -76,10 +76,10 @@ class Helper {
 		}
 
 		return null;
-	}`;
+	}\n`;
 			} else {
 				// dynamic
-				const enFileContents = `export const val = {};`
+				const enFileContents = 'export const val = {};';
 				fs.mkdirSync('locales');
 				fs.createFileSync('locales/en.js', enFileContents);
 
@@ -101,15 +101,15 @@ class Helper {
 		}
 
 		return null;
-	}`;
+	}\n`;
 			}
 		} else {
-			extends = 'LitElement';
+			localizeExtends = 'LitElement';
 			localizeMixin = '';
 			localizeResources = '';
 		}
 
-		this.replaceText('_element.js', '<%= extends %>', extends);
+		this.replaceText('_element.js', '<%= extends %>', localizeExtends);
 		this.replaceText('_element.js', '<%= localizeMixin %>', localizeMixin);
 		this.replaceText('_element.js', '<%= localizeResources %>', localizeResources);
 	}

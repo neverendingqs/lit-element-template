@@ -24,7 +24,11 @@ standardInput.on('data', (data) => {
 	if (!data) {
 		if (prompts[counter].default !== undefined) {
 			helper.setProperty(prompts[counter].property, prompts[counter].default);
-			counter++;
+			if (prompts[counter].property === 'localization') {
+				counter += 2; // do not ask about localizationResources if localization is not being used
+			} else {
+				counter++;
+			}
 		} else {
 			console.log('Required property. Please enter a value.');
 		}
@@ -36,7 +40,7 @@ standardInput.on('data', (data) => {
 			counter += 2; // do not ask about localizationResources if localization is not being used
 		} else {
 			counter++;
-		}		
+		}
 	}
 
 	if (counter < prompts.length) {
