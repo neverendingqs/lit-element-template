@@ -1,6 +1,6 @@
-import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { css, html, LitElement } from 'lit-element/lit-element.js';<%= localizeMixin %>
 
-class <%= shortName %> extends LitElement {
+class <%= shortName %> extends <%= extends %> {
 
 	static get properties() {
 		return {
@@ -18,6 +18,7 @@ class <%= shortName %> extends LitElement {
 			}
 		`;
 	}
+	<%= localizeResources %>
 
 	constructor() {
 		super();
