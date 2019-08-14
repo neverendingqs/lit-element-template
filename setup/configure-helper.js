@@ -60,7 +60,7 @@ class Helper {
 			localizeExtends = 'LocalizeMixin(LitElement)';
 			localizeMixin = '\nimport { LocalizeMixin } from \'@brightspace-ui/core/mixins/localize-mixin.js\';';
 
-			if (this.localizeResources === 'static') {
+			if (this.localizationResources === 'static') {
 				localizeResources = `\n\tstatic async getLocalizeResources(langs) {
 		const langResources = {
 			'en': {}
@@ -81,7 +81,7 @@ class Helper {
 				// dynamic
 				const enFileContents = 'export const val = {};';
 				fs.mkdirSync('locales');
-				fs.createFileSync('locales/en.js', enFileContents);
+				fs.writeFileSync('locales/en.js', enFileContents);
 
 				localizeResources = `\n\tstatic async getLocalizeResources(langs) {
 		for await (const lang of langs) {
