@@ -59,7 +59,7 @@ class Helper {
 		if (this.localization === 'yes') {
 			localizeExtends = 'LocalizeMixin(LitElement)';
 			localizeMixin = '\nimport { LocalizeMixin } from \'@brightspace-ui/core/mixins/localize-mixin.js\';';
-			localizedDemo = '\nLocalization Example: ${this.localize(\'myLangTerm\')}';
+			localizedDemo = '\n\t\t\t<div>Localization Example: ${this.localize(\'myLangTerm\')}</div>';
 
 			if (this.localizationResources === 'static') {
 				localizeResources = `\n\tstatic async getLocalizeResources(langs) {

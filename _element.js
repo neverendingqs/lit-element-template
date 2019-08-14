@@ -27,7 +27,7 @@ class <%= shortName %> extends <%= extends %> {
 
 	render() {
 		return html`
-			<h2>Hello ${this.prop1}!<%= localizedDemo %></h2>
+			<h2>Hello ${this.prop1}!</h2><%= localizedDemo %>
 		`;
 	}
 }
