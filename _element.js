@@ -1,6 +1,6 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';<%= localizeMixin %>
 
-class <%= shortName %> extends <%= extends %> {
+class <%= shortNameCaps %> extends <%= extends %> {
 
 	static get properties() {
 		return {
@@ -31,4 +31,4 @@ class <%= shortName %> extends <%= extends %> {
 		`;
 	}
 }
-customElements.define('<%= name %>', <%= shortName %>);
+customElements.define('<%= name %>', <%= shortNameCaps %>);

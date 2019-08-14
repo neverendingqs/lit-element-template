@@ -31,6 +31,10 @@ To do cross-browser testing using Sauce Labs, the API key needs to be encrypted 
 
 To learn more about how to set this up, see the [testing](https://github.com/BrightspaceUI/guide/wiki/Testing) section of The Guide.
 
+### Versioning
+
+A `GITHUB_RELEASE_TOKEN` needs to be encrypted into the .travis.yml file in order for the auto-versioning mentioned in the `Versioning, Releasing & Deploying` section of the generated README to work.
+
 ### Publishing
 
 If you use `'publish': true` in your `config` object in configure-repo.js, your package.json and .travis.yml files will be setup for future public publishing with `npm`. To complete getting the publishing to work:
