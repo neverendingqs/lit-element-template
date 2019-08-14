@@ -1,6 +1,6 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 
-class <%= shortName %> extends LitElement {
+class <%= shortNameCaps %> extends LitElement {
 
 	static get properties() {
 		return {
@@ -31,4 +31,4 @@ class <%= shortName %> extends LitElement {
 		`;
 	}
 }
-customElements.define('<%= name %>', <%= shortName %>);
+customElements.define('<%= name %>', <%= shortNameCaps %>);

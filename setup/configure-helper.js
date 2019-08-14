@@ -29,6 +29,9 @@ class Helper {
 	}
 
 	setDerivedProperties() {
+		this.shortName = this.shortName.toLowerCase();
+		this.shortNameCaps = this.shortName.replace(/-([a-z])/g, (g) => { return g[1].toUpperCase(); });
+		this.shortNameCaps = this.shortNameCaps.charAt(0).toUpperCase() + this.shortNameCaps.slice(1);
 		this.githubOrg = this.type === 'official' ? 'BrightspaceUI' : 'BrightspaceUILabs';
 		this.orgName = this.type === 'official' ? '@brightspace-ui' : '@brightspace-ui-labs';
 		this.packageName = `${this.orgName}/${this.shortName}`; // @brightspace-ui/element or @brightspace-ui-labs/element
@@ -86,6 +89,7 @@ class Helper {
 
 		const result = data.replace(/<%= name %>/g, this.name)
 			.replace(/<%= shortName %>/g, this.shortName)
+			.replace(/<%= shortNameCaps %>/g, this.shortNameCaps)
 			.replace(/<%= packageName %>/g, this.packageName)
 			.replace(/<%= description %>/g, this.description)
 			.replace(/<%= codeowner %>/g, this.codeowner)
