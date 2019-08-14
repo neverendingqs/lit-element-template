@@ -57,6 +57,69 @@ class Helper {
 		}
 	}
 
+	updateLocalizationInfo() {
+		let localizeExtends, localizeMixin, localizeResources, localizedDemo;
+		if (this.localization === 'yes') {
+			localizeExtends = 'LocalizeMixin(LitElement)';
+			localizeMixin = '\nimport { LocalizeMixin } from \'@brightspace-ui/core/mixins/localize-mixin.js\';';
+			localizedDemo = '\n\t\t\t<div>Localization Example: ${this.localize(\'myLangTerm\')}</div>';
+
+			if (this.localizationResources === 'static') {
+				localizeResources = `\n\tstatic async getLocalizeResources(langs) {
+		const langResources = {
+			'en': { 'myLangTerm': 'I am a localized string!' }
+		};
+
+		for (let i = 0; i < langs.length; i++) {
+			if (langResources[langs[i]]) {
+				return {
+					language: langs[i],
+					resources: langResources[langs[i]]
+				};
+			}
+		}
+
+		return null;
+	}\n`;
+			} else {
+				// dynamic
+				const enFileContents = 'export const val = {\n\t\'myLangTerm\': \'I am a dynamically imported localized string!\'\n};\n';
+				fs.mkdirSync('locales');
+				fs.writeFileSync('locales/en.js', enFileContents);
+
+				localizeResources = `\n\tstatic async getLocalizeResources(langs) {
+		for await (const lang of langs) {
+			let translations;
+			switch (lang) {
+				case 'en':
+					translations = await import('./locales/en.js');
+					break;
+			}
+
+			if (translations && translations.val) {
+				return {
+					language: lang,
+					resources: translations.val
+				};
+			}
+		}
+
+		return null;
+	}\n`;
+			}
+		} else {
+			localizeExtends = 'LitElement';
+			localizeMixin = '';
+			localizeResources = '';
+			localizedDemo = '';
+		}
+
+		this.replaceText('_element.js', '<%= extends %>', localizeExtends);
+		this.replaceText('_element.js', '<%= localizeMixin %>', localizeMixin);
+		this.replaceText('_element.js', '<%= localizeResources %>', localizeResources);
+		this.replaceText('_element.js', '<%= localizedDemo %>', localizedDemo);
+	}
+
 	updatePublishInfo() {
 		let deployInfo, publishInfo, readmeInfo;
 		if (this.publish === 'yes') {

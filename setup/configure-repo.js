@@ -11,7 +11,9 @@ const prompts = [
 	{ prompt: 'Description', property: 'description', default: '' },
 	{ prompt: 'Codeowner (e.g., myaccountname)', property: 'codeowner', default: '' },
 	{ prompt: 'Publish to NPM [yes | no]', property: 'publish', expected: ['yes', 'no'], default: 'yes' },
-	{ prompt: 'Component Type [labs | official]', property: 'type', expected: ['labs', 'official'], default: 'labs' }
+	{ prompt: 'Component Type [labs | official]', property: 'type', expected: ['labs', 'official'], default: 'labs' },
+	{ prompt: 'Localization [yes | no]', property: 'localization', expected: ['yes', 'no'], default: 'no' },
+	{ prompt: 'Localization Resources [static | dynamic]', property: 'localizationResources', expected: ['static', 'dynamic'], default: 'static'}
 ];
 
 let counter = 0;
@@ -22,7 +24,11 @@ standardInput.on('data', (data) => {
 	if (!data) {
 		if (prompts[counter].default !== undefined) {
 			helper.setProperty(prompts[counter].property, prompts[counter].default);
-			counter++;
+			if (prompts[counter].property === 'localization') {
+				counter += 2; // do not ask about localizationResources if localization is not being used
+			} else {
+				counter++;
+			}
 		} else {
 			console.log('Required property. Please enter a value.');
 		}
@@ -30,7 +36,11 @@ standardInput.on('data', (data) => {
 		console.log(`Property must be one of [${prompts[counter].expected}].`);
 	} else {
 		helper.setProperty(prompts[counter].property, data);
-		counter++;
+		if (prompts[counter].property === 'localization' && data === 'no') {
+			counter += 2; // do not ask about localizationResources if localization is not being used
+		} else {
+			counter++;
+		}
 	}
 
 	if (counter < prompts.length) {
@@ -54,6 +64,7 @@ function completeRepoSetup()  {
 	const year = new Date().getFullYear().toString();
 	helper.replaceText('LICENSE', '<%= year %>', year);
 	helper.updatePublishInfo();
+	helper.updateLocalizationInfo();
 
 	console.log('Moving files...');
 	helper.moveFile('_element.js', `${helper.getShortName()}.js`);
