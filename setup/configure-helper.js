@@ -80,7 +80,7 @@ class Helper {
 	}\n`;
 			} else {
 				// dynamic
-				const enFileContents = 'export const val = { \'myLangTerm\': \'I am a dynamically imported localized string!\' };';
+				const enFileContents = 'export const val = {\n\t\'myLangTerm\': \'I am a dynamically imported localized string!\'\n};\n';
 				fs.mkdirSync('locales');
 				fs.writeFileSync('locales/en.js', enFileContents);
 
