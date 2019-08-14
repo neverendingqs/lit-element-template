@@ -12,6 +12,11 @@ script:
     echo "Not a pull request and/or no secure environment variables, running headless tests...";
     npm run test:travis || travis_terminate 1;
   fi
+after_success:
+- |
+  if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_PULL_REQUEST == false ] && [ $TRAVIS_EVENT_TYPE != "cron" ]; then
+    npm run update-version; export UPDATE_RESULT=$?;
+  fi
 env:
   global:
   - SAUCE_USERNAME: Desire2Learn

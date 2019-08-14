@@ -58,7 +58,7 @@ class Helper {
 	}
 
 	updatePublishInfo() {
-		let deployInfo, publishInfo;
+		let deployInfo, publishInfo, readmeInfo;
 		if (this.publish === 'yes') {
 			deployInfo = `deploy:
   - provider: npm
@@ -67,15 +67,18 @@ class Helper {
     api_key:
       # d2l-travis-deploy: ...
     on:
-      tags: true
+      condition: $UPDATE_RESULT = 0
       repo: ${this.getRepoName()}`;
 			publishInfo = `"publishConfig": { "access": "public" },\n  "files": [ "${this.shortName}.js" ]`;
+			readmeInfo = ', create a tag, and trigger a deployment to NPM.';
 		} else {
 			deployInfo = '';
 			publishInfo = '"private": true';
+			readmeInfo = ' and create a tag.';
 		}
 		this.replaceText('package.json', '<%= publishInfo %>', publishInfo);
 		this.replaceText('travis.yml', '<%= deployInfo %>', deployInfo);
+		this.replaceText('README_element.md', '<%= readmeDeployment %>', readmeInfo);
 	}
 
 	_replaceTextWithConfigs(fileName) {
