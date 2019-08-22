@@ -123,14 +123,16 @@ class Helper {
 	updatePublishInfo() {
 		let deployInfo, publishInfo, readmeInfo;
 		if (this.publish === 'yes') {
-			deployInfo = `deploy:
+			deployInfo = `  - REPO_NAME=${this.shortName}
+  - OWNER_NAME=${this.githubOrg}
+deploy:
   - provider: npm
     email: d2ltravisdeploy@d2l.com
     skip_cleanup: true
     api_key:
       # d2l-travis-deploy: ...
     on:
-      condition: $UPDATE_RESULT = 0
+      tags: true
       repo: ${this.getRepoName()}`;
 			publishInfo = `"publishConfig": { "access": "public" },\n  "files": [ "${this.shortName}.js" ]`;
 			readmeInfo = ', create a tag, and trigger a deployment to NPM.';
