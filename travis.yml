@@ -13,10 +13,7 @@ script:
     npm run test:travis || travis_terminate 1;
   fi
 after_success:
-- |
-  if [ $TRAVIS_BRANCH == "master" ] && [ $TRAVIS_PULL_REQUEST == false ] && [ $TRAVIS_EVENT_TYPE != "cron" ]; then
-    npm run update-version; export UPDATE_RESULT=$?;
-  fi
+- frauci-update-version -d=skip && export TRAVIS_TAG=$(frauci-get-version)
 env:
   global:
   - SAUCE_USERNAME: Desire2Learn
