@@ -1,8 +1,8 @@
 # <%= name %>
 
-[![NPM version](https://img.shields.io/npm/v/<%= packageName %>/<%= shortName %>.svg)](https://www.npmjs.org/package/<%= packageName %>/<%= shortName %>)
+[![NPM version](https://img.shields.io/npm/v/<%= packageName %>.svg)](https://www.npmjs.org/package/<%= packageName %>)
 [![Greenkeeper badge](https://badges.greenkeeper.io/<%= githubOrg %>/<%= shortName %>.svg)](https://greenkeeper.io/)
-[![Build status][ci-image]][ci-url]
+[![Build status](https://travis-ci.com/<%= packageName %>.svg?branch=master)](https://travis-ci.com/<%= packageName %>)
 
 <%= description %>
 
