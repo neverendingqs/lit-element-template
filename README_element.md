@@ -4,7 +4,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/<%= githubOrg %>/<%= shortName %>.svg)](https://greenkeeper.io/)
 [![Build status](https://travis-ci.com/<%= packageName %>.svg?branch=master)](https://travis-ci.com/<%= packageName %>)
 
-<%= description %>
+<%= labsChecklist %><%= description %>
 
 ## Installation
 

@@ -65,6 +65,7 @@ function completeRepoSetup()  {
 	helper.replaceText('LICENSE', '<%= year %>', year);
 	helper.updatePublishInfo();
 	helper.updateLocalizationInfo();
+	helper.updateLabsChecklist();
 
 	console.log('Moving files...');
 	helper.moveFile('_element.js', `${helper.getShortName()}.js`);
