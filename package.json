@@ -30,7 +30,7 @@
     "wct-mocha": "^1"
   },
   "dependencies": {
-    "@brightspace-ui/core": "^1",
+    "@brightspace-ui/core": "^1.15.1",
     "@webcomponents/webcomponentsjs": "^2",
     "lit-element": "^2"
   }

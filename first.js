@@ -1,5 +1,7 @@
-import { css, html, LitElement } from 'lit-element/lit-element.js';
+import '@brightspace-ui/core/components/icons/icon.js';
 import './todo.js';
+
+import { css, html, LitElement } from 'lit-element/lit-element.js';
 
 class First extends LitElement {
 
@@ -57,7 +59,9 @@ class First extends LitElement {
 			<button type="button" @click="${this.addTodo}">Add TODO</button>
 			<ol>
 				${this.todos.map(({ name }, i) => html`
-					<d2l-labs-todo id="${i}" name="${name}"></d2l-labs-todo>
+					<d2l-labs-todo id="${i}" name="${name}">
+						<d2l-icon icon="tier1:awards" id="icon-${i}"></d2l-icon>
+					</d2l-labs-todo>
 				`)}
 			</ol>
 		`;

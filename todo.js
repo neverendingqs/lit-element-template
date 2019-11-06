@@ -23,7 +23,7 @@ class Todo extends LitElement {
 
 	render() {
 		return html`
-			<li>${this.name} <button type="button" @click=${this.deleteTodo}>Delete</button></li>
+			<li><slot></slot> ${this.name} <button type="button" @click=${this.deleteTodo}>Delete</button></li>
 		`;
 	}
 }
