@@ -28,17 +28,25 @@ class First extends LitElement {
 		this.todos = [
 			{ name: 'todo1' },
 			{ name: 'todo2' }
-		]
+		];
+
+		this.addEventListener('delete-todo', this.handleDeleteTodo);
 	}
 
 	addTodo() {
 		const newTodo = this.shadowRoot.getElementById('new-todo').value;
-		if(newTodo) {
+		if (newTodo) {
 			this.todos = [
 				...this.todos,
 				{ name: newTodo }
 			];
 		}
+	}
+
+	handleDeleteTodo(event) {
+		const deleteId = event.detail.id;
+		this.todos.splice(deleteId, 1);
+		this.requestUpdate();
 	}
 
 	render() {
@@ -48,8 +56,8 @@ class First extends LitElement {
 			<input type="text" id="new-todo" placeholder="New TODO">
 			<button type="button" @click="${this.addTodo}">Add TODO</button>
 			<ol>
-				${this.todos.map(({ name }) => html`
-					<d2l-labs-todo name="${name}"></d2l-labs-todo>
+				${this.todos.map(({ name }, i) => html`
+					<d2l-labs-todo id="${i}" name="${name}"></d2l-labs-todo>
 				`)}
 			</ol>
 		`;
