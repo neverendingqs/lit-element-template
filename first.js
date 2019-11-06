@@ -46,7 +46,7 @@ class First extends LitElement {
 			<input type="text" id="new-todo" placeholder="New TODO">
 			<button type="button" @click="${this.addTodo}">Add TODO</button>
 			<ol>
-				${this.todos.map(({ name }, i) => html`
+				${this.todos.map(({ name }) => html`
 					<li>${name}</li>
 				`)}
 			</ol>
