@@ -43,6 +43,7 @@ class First extends LitElement {
 	render() {
 		return html`
 			<h2>Hello ${this.prop1}!</h2>
+			<!-- TODO: hitting enter should also add the new TODO item -->
 			<input type="text" id="new-todo" placeholder="New TODO">
 			<button type="button" @click="${this.addTodo}">Add TODO</button>
 			<ol>
