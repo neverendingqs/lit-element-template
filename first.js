@@ -1,4 +1,5 @@
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import './todo.js';
 
 class First extends LitElement {
 
@@ -48,7 +49,7 @@ class First extends LitElement {
 			<button type="button" @click="${this.addTodo}">Add TODO</button>
 			<ol>
 				${this.todos.map(({ name }) => html`
-					<li>${name}</li>
+					<d2l-labs-todo name="${name}"></d2l-labs-todo>
 				`)}
 			</ol>
 		`;
